@@ -63,7 +63,7 @@ The keypoints positions are provided in 2D, in the coordinates of the oriented b
 ### The tracked object
 
 ### Rigid transform
-If the tracked object is not deformable, it has to be positionned, oriented and scaled accordingly to the pose estimation standards.
+The tracked object has to be positionned, oriented and scaled accordingly to the pose estimation.
 
 The mesh is associated with a label, called `ARTRACKTYPE` to specify which tracker could work with this object.
 
@@ -113,8 +113,8 @@ We want to be able to do virtual try-on with the mask, and also to be able to dr
 ARTRACKING: [
   { // the mask is used on the user face
     ID: '<id of the tracked object>',
-    NAME: 'Try-on the mask',
-    TYPE: 'FACE',
+    NAME: 'Try-on the mask', 
+    TYPE: 'FACE', // = ARTRACKTYPE
     MATRIX: [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
 
     DEFORMEDID: '<id of the deformed geometry>',
