@@ -162,5 +162,5 @@ You can test a facefilter made by rendering the 3D GLTF model **foolMask.glb** w
 
 ## References
 
-* [https://www.khronos.org/gltf/]
-* [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras]
+* [https://www.khronos.org/gltf/](https://www.khronos.org/gltf/)
+* [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras](https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras)
