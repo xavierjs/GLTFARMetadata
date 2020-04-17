@@ -7,11 +7,11 @@ This document is not a specification draft.
 
 ## Introduction
 
-GLTF is an open 3D file format tailored for realtime rendering. It is standardized by the Khronos Group (see [khronos.org/gltf](https://www.khronos.org/gltf/) ). It can be used to encode any kind of 3D model.
+GLTF is an open 3D file format tailored for realtime rendering. It is standardized by the Khronos Group [0]. It can be used to encode any kind of 3D model.
 
 In an augmented reality application, the 3D model needs to track specific objects in the real-world. In some cases it can even be deformed to adapt its shape to a specific real-world item.
 
-This repository has been created to draft a proposal to standardize the information about mapping the real-world information to the 3D model. This information could be embedded in the GLTF as metadata.
+This repository has been created to draft a proposal to standardize the information about mapping the real-world information to the 3D model. This information could be embedded in the GLTF as metadata [1].
 
 
 ## Terms definition
@@ -96,9 +96,10 @@ To compute the deformation, the keypoint positions will be used. The deformation
 
 A deformation is represented by:
 * An array of keypoints. Each keypoint is represented by:
-  * Its label, to match it with the keypoints of the tracker,
-  * Its index in the geometry position vertices array
-* The influences array. It contains `<geometryVerticesCount> * <keypointsCount>` float values. For each geometry vertices it provides the `<keypointsCount>` influences values. Each influence value is between `0` (the keypoint has no influence on the vertice deformation movement) and `1`. For each vertice, the sum of the keypoint influences should be smaller than `1.0`.
+  * `<string> label`: Its label, to match it with the keypoints of the tracker,
+  * `<int> ind` or `<float> co`: Its index in the geometry position vertices array,
+  This index can also be replaced by the position of the keypoints, to avoid any reindexing issue during 3D model exportation, or vertice duplication (to make UV mapping unique for example).
+* The influences array. It contains `<geometryVerticesCount> * <keypointsCount>` float values. For each geometry vertices it provides the `<keypointsCount>` influences values. Each influence value is between `0` (the keypoint has no influence on the vertice deformation movement) and `1`. For each vertice, the sum of the keypoint influences should be smaller than `1.0`. This array is optional, since the AR app can compute the influences using only keypoints and mesh topology.
 
 The keypoints labeling will depend on the `ARTRACKTYPE`.
 For example, a deformable object can be a semi-transparent face mesh with makeup around the lips and around the eyes.
@@ -116,37 +117,50 @@ The GLTF asset stores a deformable mask.
 We want to be able to do virtual try-on with the mask, and also to be able to drop it on the table and view it in SLAM based AR.
 
 
-```JavaScript
+```json
 ARTRACKING: [
   { // the mask is used on the user face
-    ID: '<id of the 3D model>',
-    NAME: 'Try-on the mask', 
-    TYPE: 'FACE', // = ARTRACKTYPE
-    MATRIX: [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
+    "ID": '<id of the 3D model>',
+    "NAME": 'Try-on the mask', 
+    "TYPE": 'FACE', // = ARTRACKTYPE
+    "MATRIX": [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
 
-    DEFORMEDID: '<id of the deformed geometry>',
-    DEFORMEDKEYPOINTS:[
+    "DEFORMEDID": '<id of the deformed geometry>',
+    "DEFORMEDKEYPOINTS":[
       {
-        label: 'LEFTLIPSINT',
-        ind: 522
+        "label": 'LEFT_EYEBROW_INSIDE',
+        "ind": 522
       },
       {
-        label: 'RIGHTLIPSINT',
-        ind: 52
+        "label": 'RIGHTLIPSINT',
+        "ind": 52
       },
       ...
     ],
-    DEFORMEDINFLUENCES: [0.0,0.0,0.0,0.5,0.5,0.0....]
+    "DEFORMEDINFLUENCES": [0.0,0.0,0.0,0.5,0.5,0.0....]
   },
 
   // the mask is dropped on the table
   // Here we don't use deformation
   {
-    ID: '<id of the 3D model>',
-    NAME: 'View the mask on the table',
-    TYPE: 'GROUNDPLANE',
-    MATRIX: [...]
+    "ID": '<id of the 3D model>',
+    "NAME": 'View the mask on the table',
+    "TYPE": 'GROUNDPLANE',
+    "MATRIX": [...]
   }
 ]
 
 ```
+
+## Examples
+There is an example for a face filter in [/examples/face/](/examples/face/).
+AR tracking metadata are stored in a separate file, [foolMaskARMetadata.json](/examples/face/foolMaskARMetadata.json).
+
+You can test a facefilter made by rendering the 3D GLTF model **foolMask.glb** with metadata here:
+[webar.rocks/demos/face/demos/flexibleMask2/](https://webar.rocks/demos/face/demos/flexibleMask2/)
+
+
+## References
+
+[0]: https://www.khronos.org/gltf/
+[1]: https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras
