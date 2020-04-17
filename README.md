@@ -7,11 +7,11 @@ This document is not a specification draft.
 
 ## Introduction
 
-GLTF is an open 3D file format tailored for realtime rendering. It is standardized by the Khronos Group [0]. It can be used to encode any kind of 3D model.
+GLTF is an open 3D file format tailored for realtime rendering. It is standardized by the Khronos Group. It can be used to encode any kind of 3D model.
 
 In an augmented reality application, the 3D model needs to track specific objects in the real-world. In some cases it can even be deformed to adapt its shape to a specific real-world item.
 
-This repository has been created to draft a proposal to standardize the information about mapping the real-world information to the 3D model. This information could be embedded in the GLTF as metadata [1].
+This repository has been created to draft a proposal to standardize the information about mapping the real-world information to the 3D model. This information could be embedded in the GLTF as metadata.
 
 
 ## Terms definition
@@ -162,5 +162,5 @@ You can test a facefilter made by rendering the 3D GLTF model **foolMask.glb** w
 
 ## References
 
-* [0]: [https://www.khronos.org/gltf/]
-* [1]: https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras
+* [https://www.khronos.org/gltf/]
+* [https://github.com/KhronosGroup/glTF/blob/master/specification/2.0/README.md#reference-extras]
