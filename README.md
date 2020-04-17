@@ -117,7 +117,7 @@ The GLTF asset stores a deformable mask.
 We want to be able to do virtual try-on with the mask, and also to be able to drop it on the table and view it in SLAM based AR.
 
 
-```json
+```JavaScript
 ARTRACKING: [
   { // the mask is used on the user face
     "ID": '<id of the 3D model>',
